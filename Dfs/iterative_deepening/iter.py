@@ -8,7 +8,7 @@ class Solution:
         self.vertex_list = []
         self.edge_pair = []
         self.budget = 0
-        self.verbose = None
+        self.verbose = 0
         self.goal = 0
 
     def readinput(self, filename):
@@ -16,8 +16,11 @@ class Solution:
 
         # read budget and verbose
         line = file.readline()
-        b, self.verbose = line.split()
+        b, v = line.split()
         self.budget = int(b)
+        if v == 'V':
+            self.verbose = 1
+
 
         # read vertext and corresponding cost
         while 1:
@@ -73,11 +76,12 @@ class Solution:
         if depth > maxdepth:
             return
 
-        if self.verbose == 'V' and state:
+        if state:
             cost = self.get_total_cost(state)
             if cost > self.budget:
                 return
-            print('{} Cost = {}.'.format(" ".join(state), cost))
+            if self.verbose:
+                print('{} Cost = {}.'.format(" ".join(state), cost))
             if self.check_goal(state):
                 print('Find solution {} Cost = {}.'.format(" ".join(state), cost))
                 self.goal = 1
@@ -94,11 +98,13 @@ class Solution:
     def iter_deep(self):
         self.readinput(sys.argv[1])
         for i in range(1, 5):
-            print('Depth = {}'.format(i))
+            if self.verbose:
+                print('Depth = {}'.format(i))
             ans = self.dfs([], 0, i)
             if self.goal:
                 break
-            print("\n")
+            if self.verbose:
+                print("\n")
 
 if __name__ == '__main__':
     sol = Solution()
