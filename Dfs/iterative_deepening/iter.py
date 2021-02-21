@@ -97,7 +97,7 @@ class Solution:
 
     def iter_deep(self):
         self.readinput(sys.argv[1])
-        for i in range(1, 5):
+        for i in range(1, len(self.vertex_list)):
             if self.verbose:
                 print('Depth = {}'.format(i))
             ans = self.dfs([], 0, i)
@@ -105,6 +105,8 @@ class Solution:
                 break
             if self.verbose:
                 print("\n")
+        if not self.goal:
+                print("No solution found")
 
 if __name__ == '__main__':
     sol = Solution()
